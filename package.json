@@ -4,15 +4,17 @@
   "description": "[![Actions Status](https://github.com/danilanchik/frontend-project-46/workflows/hexlet-check/badge.svg)](https://github.com/danilanchik/frontend-project-46/actions)",
   "main": "index.js",
   "bin": {
-    "gendiff": "./gendiff.js"
+    "gendiff": "./bin/gendiff.js"
   },
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "DA",
   "license": "ISC",
   "dependencies": {
-    "commander": "^11.0.0"
+    "commander": "^11.0.0",
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "eslint": "^8.44.0",
