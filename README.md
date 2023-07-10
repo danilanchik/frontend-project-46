@@ -10,3 +10,6 @@
 
 ### Compare flat .yaml files with plain structure (example of the 5th step):
 [![asciicast](https://asciinema.org/a/595797.svg)](https://asciinema.org/a/595797)
+
+### Comparison of nested files using the 'stylish' format (example of the 6th step):
+[![asciicast](https://asciinema.org/a/595998.svg)](https://asciinema.org/a/595998)

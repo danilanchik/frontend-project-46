@@ -1,28 +1,32 @@
-import fs from 'fs';
-import path, { dirname } from 'path';
+import path from 'node:path';
 import { fileURLToPath } from 'url';
-import genDiff from '../src/getDifference.js';
+import { dirname } from 'path';
+import genDiff from '../src/index.js';
+import expected from '../__fixtures__/expected.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const fileNames = { file1: 'file1', file2: 'file2' };
-const fileExtensions = { json: '.json', yml: '.yml', yaml: '.yaml' };
+const getFilePath = (fileName) => path.join(__dirname, '..', '__fixtures__', fileName);
 
-const getFixturePath = (file, ext) => path.join(__dirname, '..', '__fixtures__', `${file}${ext}`);
+describe('genDiff function', () => {
+  test('should generate correct diff for nested structures in JSON files', () => {
+    const pathToFile1 = getFilePath('file1.json');
+    const pathToFile2 = getFilePath('file2.json');
 
-test('compare two flat json files', () => {
-  const filepath1 = getFixturePath(fileNames.file1, fileExtensions.json);
-  const filepath2 = getFixturePath(fileNames.file2, fileExtensions.json);
-  const expected = fs.readFileSync(getFixturePath('expected', '.txt'), 'utf-8');
+    const expectedDiff = expected;
+    const actual = genDiff(pathToFile1, pathToFile2);
 
-  expect(genDiff(filepath1, filepath2)).toEqual(expected);
-});
+    expect(actual).toEqual(expectedDiff);
+  });
 
-test('compare two flat yaml files', () => {
-  const filepath1 = getFixturePath(fileNames.file1, fileExtensions.yaml);
-  const filepath2 = getFixturePath(fileNames.file2, fileExtensions.yaml);
-  const expected = fs.readFileSync(getFixturePath('expected', '.txt'), 'utf-8');
+  test('should generate correct diff for nested structures in YAML files', () => {
+    const pathToFile1 = getFilePath('file1.yaml');
+    const pathToFile2 = getFilePath('file2.yaml');
 
-  expect(genDiff(filepath1, filepath2)).toEqual(expected);
+    const expectedDiff = expected;
+    const actual = genDiff(pathToFile1, pathToFile2);
+
+    expect(actual).toEqual(expectedDiff);
+  });
 });
