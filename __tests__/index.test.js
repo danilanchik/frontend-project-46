@@ -1,7 +1,7 @@
 import path from 'node:path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-import genDiff from '../src/index.js';
+import gendiff from '../src/index.js';
 import expected from '../__fixtures__/expected.js';
 import expectedPlain from '../__fixtures__/expected_plain.js';
 import expectedJson from '../__fixtures__/expected_json.js';
@@ -11,13 +11,13 @@ const __dirname = dirname(__filename);
 
 const getFilePath = (fileName) => path.join(__dirname, '..', '__fixtures__', fileName);
 
-describe('genDiff function', () => {
+describe('gendiff function', () => {
   test('should generate correct diff for nested structures in JSON files', () => {
     const pathToFile1 = getFilePath('file1.json');
     const pathToFile2 = getFilePath('file2.json');
 
     const expectedDiff = expected;
-    const actual = genDiff(pathToFile1, pathToFile2);
+    const actual = gendiff(pathToFile1, pathToFile2);
 
     expect(actual).toEqual(expectedDiff);
   });
@@ -27,7 +27,7 @@ describe('genDiff function', () => {
     const pathToFile2 = getFilePath('file2.yaml');
 
     const expectedDiff = expected;
-    const actual = genDiff(pathToFile1, pathToFile2);
+    const actual = gendiff(pathToFile1, pathToFile2);
 
     expect(actual).toEqual(expectedDiff);
   });
@@ -35,12 +35,12 @@ describe('genDiff function', () => {
   test('plain format', () => {
     const filepath1 = getFilePath('file1.json');
     const filepath2 = getFilePath('file2.json');
-    expect(genDiff(filepath1, filepath2, 'plain')).toEqual(expectedPlain);
+    expect(gendiff(filepath1, filepath2, 'plain')).toEqual(expectedPlain);
   });
 
   test('json format', () => {
     const filepath1 = getFilePath('file1.json');
     const filepath2 = getFilePath('file2.json');
-    expect(genDiff(filepath1, filepath2, 'json')).toEqual(expectedJson);
+    expect(gendiff(filepath1, filepath2, 'json')).toEqual(expectedJson);
   });
 });

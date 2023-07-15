@@ -2,7 +2,7 @@
 
 import path from 'path';
 import { Command } from 'commander';
-import genDiff from '../src/index.js';
+import gendiff from '../src/index.js';
 
 const program = new Command();
 
@@ -15,7 +15,7 @@ program
     const fullFilepath1 = path.resolve(process.cwd(), filepath1);
     const fullFilepath2 = path.resolve(process.cwd(), filepath2);
     const format = options.format || 'stylish';
-    const diff = genDiff(fullFilepath1, fullFilepath2, format);
+    const diff = gendiff(fullFilepath1, fullFilepath2, format);
     console.log(diff);
   })
   .parse();
