@@ -5,7 +5,6 @@
 
 [![Test Coverage](https://api.codeclimate.com/v1/badges/bbe33a568a52550f7903/test_coverage)](https://codeclimate.com/github/danilanchik/frontend-project-46/test_coverage)
 
-[![GitHub Actions](https://github.com/danilanchik/frontend-project-46/actions/workflows/github-actions.yml/badge.svg)](https://github.com/danilanchik/frontend-project-46/actions/workflows/github-actions.yml)
 
 # Difference Calculator
 
