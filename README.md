@@ -20,3 +20,6 @@
 
 ### Comparison of nested files using the 'plain' format (example of the 7th step):
 [![asciicast](https://asciinema.org/a/596821.svg)](https://asciinema.org/a/596821)
+
+### Comparison of nested files using the 'json' format (example of the 8th step)
+[![asciicast](https://asciinema.org/a/596983.svg)](https://asciinema.org/a/596983)

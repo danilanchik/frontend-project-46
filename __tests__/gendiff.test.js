@@ -4,6 +4,7 @@ import { dirname } from 'path';
 import genDiff from '../src/index.js';
 import expected from '../__fixtures__/expected.js';
 import expectedPlain from '../__fixtures__/expected_plain.js';
+import expectedJson from '../__fixtures__/expected_json.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -35,5 +36,11 @@ describe('genDiff function', () => {
     const filepath1 = getFilePath('file1.json');
     const filepath2 = getFilePath('file2.json');
     expect(genDiff(filepath1, filepath2, 'plain')).toEqual(expectedPlain);
+  });
+
+  test('json format', () => {
+    const filepath1 = getFilePath('file1.json');
+    const filepath2 = getFilePath('file2.json');
+    expect(genDiff(filepath1, filepath2, 'json')).toEqual(expectedJson);
   });
 });
