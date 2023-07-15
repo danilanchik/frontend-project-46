@@ -2,14 +2,13 @@
   "name": "@hexlet/code",
   "version": "1.0.0",
   "description": "[![Actions Status](https://github.com/danilanchik/frontend-project-46/workflows/hexlet-check/badge.svg)](https://github.com/danilanchik/frontend-project-46/actions)",
-  "main": "index.js",
+  "main": "src/index.js",
   "bin": {
     "gendiff": "./bin/gendiff.js"
   },
   "type": "module",
   "scripts": {
-    "test": "npx jest",
-    "start": "node ./bin/gendiff.js"
+    "test": "npx jest"
   },
   "author": "DA",
   "license": "ISC",
