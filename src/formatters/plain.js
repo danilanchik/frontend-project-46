@@ -19,7 +19,7 @@ const formatPlain = (diffs, parentKey = '') => diffs.flatMap((diff) => {
     case 'removed':
       return `Property '${key}' was removed`;
     case 'updated':
-      return `Property '${key}' was updated. From ${stringify(diff.oldValue)} to ${stringify(diff.value !== undefined ? diff.value : null)}`;
+      return `Property '${key}' was updated. From ${stringify(diff.oldValue)} to ${stringify(diff.value)}`;
     case 'nested':
       return formatPlain(diff.children, key);
     case 'unchanged':

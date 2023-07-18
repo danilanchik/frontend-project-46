@@ -1,22 +1,23 @@
 import _ from 'lodash';
 
-const getDiff = (file1, file2) => {
-  const keys = _.sortBy(_.union(Object.keys(file1), Object.keys(file2)));
+const getDiff = (data1, data2) => {
+  const keys = _.union(Object.keys(data1), Object.keys(data2)).sort();
   return keys.map((key) => {
-    if (_.isObject(file1[key]) && _.isObject(file2[key])) {
-      return { name: key, status: 'nested', children: getDiff(file1[key], file2[key]) };
+    if (!_.has(data1, key)) {
+      return { name: key, status: 'added', value: data2[key] };
     }
-    if (!_.has(file1, key)) return { name: key, value: file2[key], status: 'added' };
-    if (!_.has(file2, key)) return { name: key, value: file1[key], status: 'removed' };
-    if (file1[key] !== file2[key]) {
+    if (!_.has(data2, key)) {
+      return { name: key, status: 'removed', value: data1[key] };
+    }
+    if (_.isPlainObject(data1[key]) && _.isPlainObject(data2[key])) {
+      return { name: key, status: 'nested', children: getDiff(data1[key], data2[key]) };
+    }
+    if (!_.isEqual(data1[key], data2[key])) {
       return {
-        name: key,
-        oldValue: file1[key],
-        value: file2[key],
-        status: 'updated',
+        name: key, status: 'updated', oldValue: data1[key], value: data2[key],
       };
     }
-    return { name: key, value: file2[key], status: 'unchanged' };
+    return { name: key, status: 'unchanged', value: data1[key] };
   });
 };
 

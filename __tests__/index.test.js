@@ -2,7 +2,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import gendiff from '../src/index.js';
-import expected from '../__fixtures__/expected.js';
+import expectedStylish from '../__fixtures__/expected_stylish.js';
 import expectedPlain from '../__fixtures__/expected_plain.js';
 import expectedJson from '../__fixtures__/expected_json.js';
 
@@ -16,7 +16,7 @@ describe('gendiff function', () => {
     const pathToFile1 = getFilePath('file1.json');
     const pathToFile2 = getFilePath('file2.json');
 
-    const expectedDiff = expected;
+    const expectedDiff = expectedStylish;
     const actual = gendiff(pathToFile1, pathToFile2);
 
     expect(actual).toEqual(expectedDiff);
@@ -26,7 +26,7 @@ describe('gendiff function', () => {
     const pathToFile1 = getFilePath('file1.yaml');
     const pathToFile2 = getFilePath('file2.yaml');
 
-    const expectedDiff = expected;
+    const expectedDiff = expectedStylish;
     const actual = gendiff(pathToFile1, pathToFile2);
 
     expect(actual).toEqual(expectedDiff);
@@ -39,8 +39,11 @@ describe('gendiff function', () => {
   });
 
   test('json format', () => {
+    const expectedObject = JSON.parse(expectedJson);
     const filepath1 = getFilePath('file1.json');
     const filepath2 = getFilePath('file2.json');
-    expect(gendiff(filepath1, filepath2, 'json')).toEqual(expectedJson);
+    const actualJson = gendiff(filepath1, filepath2, 'json');
+    const actualObject = JSON.parse(actualJson);
+    expect(actualObject).toEqual(expectedObject);
   });
 });

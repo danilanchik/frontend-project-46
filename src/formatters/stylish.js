@@ -1,42 +1,46 @@
 import _ from 'lodash';
 
-const getIndent = (depth, status = 'unchanged', indent = ' ', length = 4) => {
+const getIndent = (depth, status = 'unchanged', indent = ' ', length = 2) => {
   const signsIndent = status === 'tree' || status === 'unchanged' ? 0 : 2;
   return `\n${indent.repeat(length * depth - signsIndent)}`;
 };
 
-function stringify(node, depth = 1) {
+const stringify = (node, depth = 1) => {
+  if (!_.isObject(node)) {
+    return node;
+  }
+
   return Object.keys(node).map((key) => {
-    const value = !_.isObject(node[key]) ? node[key] : `{${stringify(node[key], depth + 1)}${getIndent(depth)}}`;
+    const value = !_.isObject(node[key]) ? node[key] : `{${stringify(node[key], depth + 2)}${getIndent(depth)}}`;
     return `${getIndent(depth)}${key}: ${value}`;
   }).join('');
-}
+};
 
-function stylish(object, depth = 1) {
-  return object.map(({
-    name,
-    oldValue,
-    status,
-    value,
-    children,
-  }) => {
-    const indent = getIndent(depth, status);
-    const setValue = (val) => (!_.isObject(val) ? val : `{${stringify(val, depth + 1)}${getIndent(depth)}}`);
-    switch (status) {
-      case 'nested':
-        return `${indent}${name}: {${stylish(children, depth + 1)}${indent}}`;
+const stylish = (diff, depth = 1) => {
+  const setValue = (value) => (!_.isObject(value) ? value : `{${stringify(value, depth + 2)}${getIndent(depth)}}`);
+
+  const lines = diff.flatMap((node) => {
+    const indent = getIndent(depth, node.status);
+    switch (node.status) {
       case 'added':
-        return `${indent}+ ${name}: ${setValue(value)}`;
-      case 'updated':
-        return `${indent}- ${name}: ${setValue(oldValue)}${indent}+ ${name}: ${setValue(value)}`;
+        return `${indent}+ ${node.name}: ${setValue(node.value)}`;
       case 'removed':
-        return `${indent}- ${name}: ${setValue(value)}`;
+        return `${indent}- ${node.name}: ${setValue(node.value)}`;
       case 'unchanged':
-        return `${indent}${name}: ${setValue(value)}`;
+        return `${indent}${node.name}: ${setValue(node.value)}`;
+      case 'updated':
+        return [
+          `${indent}- ${node.name}: ${setValue(node.oldValue)}`,
+          `${indent}+ ${node.name}: ${setValue(node.value)}`,
+        ];
+      case 'nested':
+        return `${indent}  ${node.name}: {${stylish(node.children, depth + 2)}${getIndent(depth)}}`;
       default:
-        return null;
+        throw new Error(`Unknown type: ${node.status}`);
     }
-  }).join('');
-}
+  });
+
+  return lines.join('');
+};
 
 export default (object) => `{${stylish(object)}\n}`;
