@@ -1,5 +1,5 @@
 {
-  "name": "@hexlet/code",
+  "name": "Gendiff",
   "version": "1.0.0",
   "description": "[![Actions Status](https://github.com/danilanchik/frontend-project-46/workflows/hexlet-check/badge.svg)](https://github.com/danilanchik/frontend-project-46/actions)",
   "main": "src/index.js",
